@@ -18,4 +18,7 @@ def RandomNodeList(n=20):
 if __name__=='__main__':
 	nodelist = RandomNodeList()
 	print nodelist
-	print HashTree(nodelist)
+	h = HashTree(nodelist)
+	for x in h.tree:
+		for y in x:
+			print y.value, y.hashdigest
