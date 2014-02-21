@@ -4,6 +4,7 @@
 *.so
 
 venv
+*.*~
 
 # Packages
 *.egg
