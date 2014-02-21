@@ -7,9 +7,9 @@ class Node():
 		self.hashdigest = hashdigest
 	
 def NodeCombiner(left, right):
-	newvalue = str(left.value + right.value)
+	newvalue = left.value + right.value
 	lefthash, righthash = left.hashdigest, right.hashdigest
-	hashdigest = sha256(newvalue + lefthash + righthash).hexdigest()
+	hashdigest = sha256(str(newvalue) + lefthash + righthash).hexdigest()
 	
 	return Node(newvalue, hashdigest)
 
@@ -27,7 +27,7 @@ class HashTree():
 		newnodelist = []
 		
 		if len(nodelist) % 2:
-			nodelist.append(Node(0, sha256('0').hexdigest()))
+			nodelist.append(Node(0.0, sha256('0').hexdigest()))
 		
 		for x in range(int(math.ceil(len(nodelist)/2.0))):
 			newnodelist.append(NodeCombiner(nodelist[x], nodelist[-(x + 1)]))
