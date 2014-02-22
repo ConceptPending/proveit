@@ -49,6 +49,12 @@ class HashTree():
 		self.tree = []
 		return self.GenTree(self.nodelist)
 	
+	def GetInfoFromHash(self, hashdigest):
+		index = self.lookup[hashdigest]
+		info = self.GetNodeInfo(index)
+		verifyinfo = self.GetNodePairList(index)
+		return info[0], info[1], verifyinfo[0], verifyinfo[1]
+	
 	def GetNodeInfo(self, index):
 		return self.tree[0][index].value, self.tree[0][index].hashdigest
 	
@@ -68,7 +74,6 @@ class HashTree():
 			self.lookup[x.hashdigest] = index
 			index += 1
 	
-
 def ValidateNode(node, roothash, pairlist):
 	for x in pairlist:
 		# If this was an even node, put the paired node on the right, otherwise it goes on the left.
