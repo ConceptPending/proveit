@@ -77,7 +77,3 @@ def ValidateNode(node, roothash, pairlist):
 		else:
 			node = NodeCombiner(Node(x[0], x[1]), node)
 	return node.hashdigest == roothash
-
-
-
-

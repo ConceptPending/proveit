@@ -70,7 +70,6 @@ class HashTree():
 	
 
 def ValidateNode(node, roothash, pairlist):
-	print pairlist
 	for x in pairlist:
 		# If this was an even node, put the paired node on the right, otherwise it goes on the left.
 		if x[2]:
