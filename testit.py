@@ -16,9 +16,9 @@ def RandomNodeList(n=20):
 
 
 if __name__=='__main__':
-	nodelist = RandomNodeList(n=2)
+	nodelist = RandomNodeList(n=40)
 	h = HashTree(nodelist)
-	info = h.GetNodeInfo(1)
-	pairlist = h.GetNodePairList(1)
-	print info
-	print ValidateNode(Node(info[0], info[1]), pairlist[0], pairlist[1])
+	for x in range(40):
+		info = h.GetNodeInfo(x)
+		pairlist = h.GetNodePairList(x)
+		print ValidateNode(Node(info[0], info[1]), pairlist[0], pairlist[1])

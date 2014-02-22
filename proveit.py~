@@ -30,7 +30,6 @@ class HashTree():
 			nodelist.append(Node(0.0, sha256('0').hexdigest()))
 		
 		for x in range(int(math.ceil(len(nodelist)/2.0))):
-			print nodelist[(x * 2)].value, nodelist[(x * 2)].hashdigest, nodelist[(x * 2 + 1)].value, nodelist[(x * 2 + 1)].hashdigest
 			newnodelist.append(NodeCombiner(nodelist[(x * 2)], nodelist[(x * 2 + 1)]))
 		
 		if len(newnodelist) > 1:
@@ -38,9 +37,13 @@ class HashTree():
 		else:
 			self.tree.append(newnodelist)
 			self.roothash = newnodelist[0].hashdigest
-			for x in self.tree[0]:
-				print x.value, x.hashdigest
 			return self.roothash
+	
+	def ValidateTree(self, tree=None):
+		if tree == None:
+			tree = self.tree
+		for x in tree:
+			print x
 	
 	def RegenTree(self):
 		self.tree = []
@@ -52,9 +55,10 @@ class HashTree():
 	def GetNodePairList(self, index, pairlist=[], tree=None):
 		if tree == None:
 			tree = self.tree
+			pairlist = []
 		elif len(tree) == 1:
 			return self.roothash, pairlist
-		pairlist.append((tree[0][index - 1 if index % 2 else 0].value, tree[0][index - 1 if index % 2 else 0].hashdigest, 1 - index % 2))
+		pairlist.append((tree[0][index + (-1 if index % 2 else 1)].value, tree[0][index + (-1 if index % 2 else 1)].hashdigest, 0 if index % 2 else 1))
 		index = index / 2
 		return self.GetNodePairList(index, pairlist=pairlist, tree=tree[1:])
 		
@@ -67,14 +71,12 @@ class HashTree():
 
 def ValidateNode(node, roothash, pairlist):
 	print pairlist
-	print node.hashdigest, node.value
 	for x in pairlist:
 		# If this was an even node, put the paired node on the right, otherwise it goes on the left.
 		if x[2]:
-			node = NodeCombiner(Node(x[0], x[1]), node)
-		else:
 			node = NodeCombiner(node, Node(x[0], x[1]))
-	print node.hashdigest, roothash
+		else:
+			node = NodeCombiner(Node(x[0], x[1]), node)
 	return node.hashdigest == roothash
 
 
