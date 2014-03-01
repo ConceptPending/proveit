@@ -5,6 +5,7 @@
 
 venv
 *.*~
+.pypirc
 
 # Packages
 *.egg
