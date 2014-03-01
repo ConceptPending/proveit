@@ -1,8 +1,11 @@
 from hashlib import sha256
 import math
+from decimal import Decimal
 
 class Node():
 	def __init__(self, value, hashdigest):
+		if type(value) is str:
+			value = Decimal(value)
 		self.value = value
 		self.hashdigest = hashdigest
 	
