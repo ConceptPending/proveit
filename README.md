@@ -5,7 +5,10 @@ This is a basic implementation of gmaxwell's suggestion of proving account balan
 
 ### Basic Docs
 
-I'll create a setup.py soon (or merge one from a pull request! hint, hint), but in the meantime, clone the repo or download proveit.py to a project you wish to use this in.
+To install the project just use:
+```
+pip install proveit
+```
 
 You will need to provide the HashTree class with a list of customer accounts and hashes with which to create a glorified Merkle tree.
 
@@ -13,6 +16,8 @@ The hashes should probably just be hashfunction(customer_id + salt), or somethin
 
 #### Basic Usage
 ```python
+pip install proveit
+
 from proveit import *
 
 customers = [ Node(123, 'unique identifier, preferably hashed'), Node(456, 'unique identifier2, preferably hashed as well')]
