@@ -16,8 +16,6 @@ The hashes should probably just be hashfunction(customer_id + salt), or somethin
 
 #### Basic Usage
 ```python
-pip install proveit
-
 from proveit import *
 
 customers = [ Node(123, 'unique identifier, preferably hashed'), Node(456, 'unique identifier2, preferably hashed as well')]
