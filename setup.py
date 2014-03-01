@@ -1,10 +1,9 @@
 #!/usr/bin/env python
-import setuptools
+from distutils.core import setup
 
-
-setuptools.setup(
-    author='Nick W',
-    author_email='falconeer001@gmail.com',
+setup(
+    author='Nick Williamson',
+    author_email='nick@nickw.info',
     description="Implementation of gmaxwell's suggestion of proving account balances",
     name='proveit',
     packages=[''],
