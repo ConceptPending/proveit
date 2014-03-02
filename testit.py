@@ -18,6 +18,11 @@ def RandomNodeList(n=20):
 if __name__=='__main__':
 	nodelist = RandomNodeList(n=40)
 	h = HashTree(nodelist)
+	print h.ReturnTotal()
+	total = 0
+	for x in nodelist:
+		total += x.value
+	print total
 	for x in range(40):
 		info = h.GetNodeInfo(x)
 		pairlist = h.GetNodePairList(x)

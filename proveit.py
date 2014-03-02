@@ -27,6 +27,9 @@ class HashTree():
 		self.lookup = {}
 		self.GenLookup()
 	
+	def ReturnTotal(self):
+		return self.tree[-1][0].value
+	
 	def GenTree(self, nodelist):
 		self.tree.append(nodelist)
 		newnodelist = []

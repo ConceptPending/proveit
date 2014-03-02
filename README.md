@@ -51,6 +51,12 @@ ValidateBalance(coin, Decimal("<insert balance you wish to prove>"), message="Va
 
 This will give you a list of signed messages, for at least the amount that you wish to verify (if you have a sufficient balance), and for the amount in your wallet, if you don't have a sufficient balance.
 
+In practice, you can likely get away with something approximating the following since there is a default message that includes a timestamp.
+
+```python
+ValidateBalance(coin, hashtree.GetTotal())
+```
+
 If you see any problems or have an suggestions, please raise an issue or (better yet!) submit a pull request!
 
 Cheers,
