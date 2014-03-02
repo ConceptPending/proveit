@@ -1,6 +1,8 @@
 from hashlib import sha256
 import math
 from decimal import Decimal
+from bitcoinrpc import *
+import time
 
 class Node():
 	def __init__(self, value, hashdigest):
@@ -85,3 +87,18 @@ def ValidateNode(node, roothash, pairlist):
 		else:
 			node = NodeCombiner(Node(x[0], x[1]), node)
 	return node.hashdigest == roothash
+
+class Coin():
+	def __init__(self, host, port, user, password, use_https=True):
+		self.conn = connect_to_remote(user, password, host=host, port=port, use_https=use_https)
+
+def ValidateBalance(coin, amount, message="Coin Balance Verified for %s" % time.strftime("%a, %d %b %Y %H:%M:%S +0000")):
+	if type(amount) is str:
+		amount = Decimal(amount)
+	vfdamount = Decimal('0')
+	msgs = []
+	for x in coin.conn.listunspent():
+		if vfdamount < amount:
+			vfdamount += x.amount
+			msgs.append((x.address, coin.conn.proxy.signmessage(x.address, message)))
+	return msgs, vfdamount, message

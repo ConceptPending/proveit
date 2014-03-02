@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from distutils.core import setup
+from setuptools import setup
 
 setup(
     author='Nick Williamson',
@@ -8,5 +8,6 @@ setup(
     description="Implementation of gmaxwell's suggestion of proving account balances",
     name='proveit',
     packages=[''],
-    version='0.0.2'
+    install_requires=['bitcoin-python'],
+    version='0.0.3'
 )
