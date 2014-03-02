@@ -64,6 +64,11 @@ Just use the *static-verify.html* page as well as the *js/* folder, and no serve
 
 This implementation includes the Merkle Tree verfier while verifying the signed messages and account balances is the next step.
 
+#### Browser Extension (Vaporware for now)
+Eventually, a browser extension can be built that will automatically verify this to the end-user whenever they're logged into a platform that uses Prove It!
+
+An alert can then appear if anything is ever amiss.
+
 #### The End
 If you see any problems or have an suggestions, please raise an issue or (better yet!) submit a pull request!
 
