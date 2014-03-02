@@ -3,6 +3,8 @@ Prove It!
 
 This is a basic implementation of gmaxwell's suggestion of proving account balances documented here: https://iwilcox.me.uk/v/nofrac
 
+This will work for any CryptoCurrency that is based off the Bitcoin protocol.
+
 ### Basic Docs
 
 To install the project just use:

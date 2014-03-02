@@ -9,5 +9,5 @@ setup(
     name='proveit',
     packages=[''],
     install_requires=['bitcoin-python'],
-    version='0.0.3'
+    version='0.0.4'
 )
