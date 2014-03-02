@@ -89,7 +89,7 @@ def ValidateNode(node, roothash, pairlist):
 	return node.hashdigest == roothash
 
 class Coin():
-	def __init__(self, host, port, user, password, use_https=True):
+	def __init__(self, host, port, user, password, use_https=False):
 		self.conn = connect_to_remote(user, password, host=host, port=port, use_https=use_https)
 
 def ValidateBalance(coin, amount, message="Coin Balance Verified for %s" % time.strftime("%a, %d %b %Y %H:%M:%S +0000")):

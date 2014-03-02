@@ -39,7 +39,15 @@ Now anyone can verify this section of the Merkle tree using the following functi
 ValidateNode(Node(info[0], info[1]), info[2], info[3])
 ```
 
-I will be adding more code and better documentation tomorrow.
+To add the CryptoCurrency portion of the account verification, use the following code, inserting your own RPC information as required.
+
+```python
+coin = Coin(host, port, user, password)
+
+ValidateBalance(coin, Decimal("<insert balance you wish to prove>"), message="Validation message that gives your customers confidence")
+```
+
+This will give you a list of signed messages, for at least the amount that you wish to verify (if you have a sufficient balance), and for the amount in your wallet, if you don't have a sufficient balance.
 
 If you see any problems or have an suggestions, please raise an issue or (better yet!) submit a pull request!
 
