@@ -6,8 +6,7 @@ import time
 
 class Node():
 	def __init__(self, value, hashdigest):
-		if type(value) is str:
-			value = Decimal(value)
+		value = Decimal(str(value))
 		self.value = value
 		self.hashdigest = hashdigest
 	
