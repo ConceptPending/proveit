@@ -31,6 +31,9 @@
 						This page is for any customer of a site that uses Prove It! to verify they have sufficient funds on hand to cover all customer balances.
 					</p>
 					<p>
+						If you own or operate a Crypto-Currency service and would like to use Prove It! to instill trust in your own customer base, go to the <a href="https://github.com/ConceptPending/proveit">GitHub Project Page</a> for detailed information.
+					</p>
+					<p>
 						The site you use should provide you with three, key pieces of information:
 					</p>
 					<ul>
@@ -49,6 +52,20 @@
 			<div class="row">
 				<div class="col-md-7">
 					<h2>Input</h2>
+					<form role="form">
+						<div class="form-group">
+							<label for="">Root Hash</label>
+							<input class="form-control" type="" name="" id="" ng-model="roothash">
+						</div>
+						<div class="form-group">
+							<label for="">Hash Tree Dump</label>
+							<textarea rows=5 class="form-control" type="" name="" id="" ng-model="hashtreedump"></textarea>
+						</div>
+						<div class="form-group">
+							<label for="">Site Holdings Verification (Coming Soon)</label>
+							<input disabled class="form-control" type="" name="" id="" ng-model="rawholdings">
+						</div>
+					</form>
 				</div>
 				<div class="col-md-5">
 					<h2>Result</h2>

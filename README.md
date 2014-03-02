@@ -69,6 +69,8 @@ Eventually, a browser extension can be built that will automatically verify this
 
 An alert can then appear if anything is ever amiss.
 
+The way I intend to implement this will require that the site provides proper JSON responses to predetermined endpoints on the domain or subdomain where the site is hosted, but if you're using the Prove It! method of verifying funds anyway, this shouldn't be a big issue.
+
 #### The End
 If you see any problems or have an suggestions, please raise an issue or (better yet!) submit a pull request!
 

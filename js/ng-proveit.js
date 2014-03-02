@@ -23,5 +23,8 @@ var ValidateNode = function(node, roothash, pairlist) {
 var app = angular.module('proveit', []);
 
 app.controller("proveitCtrl", function($scope, $http) {
-	
+	$scope.roothash = '';
+	$scope.totalbalance = 0;
+	$scope.rawholdings = '';
+	$scope.hashtreedump = '';
 });
