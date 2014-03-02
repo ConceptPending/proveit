@@ -57,6 +57,14 @@ In practice, you can likely get away with something approximating the following 
 ValidateBalance(coin, hashtree.GetTotal())
 ```
 
+#### Browser Verification (Work in Progress!)
+Included is a JS implementation of the verification code, so that customers can copy & paste the Root Hash + Merkle Tree, then see whether the tree can be verified as well as whether they have proven they hold that amount of Crypto-Currency.
+
+Just use the *static-verify.html* page as well as the *js/* folder, and no server-side code is necessary.
+
+This implementation includes the Merkle Tree verfier while verifying the signed messages and account balances is the next step.
+
+#### The End
 If you see any problems or have an suggestions, please raise an issue or (better yet!) submit a pull request!
 
 Cheers,

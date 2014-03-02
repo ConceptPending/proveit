@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="proveit">
 	<head>
 		<title>Prove It!</title>
 		<meta charset="utf-8">
@@ -7,17 +7,62 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+		<!-- Extra styling and some code is done inline purposefully to make this more easily portable. There is a chance this will be done to an even greater extent down the line. -->
+		<style>
+			.jumbotron {
+				background-color: #293EAC;
+				background-image: linear-gradient(to bottom,#293EAC 0,#316ACE 100%);
+				color: white;
+			}
+			.jumbotron small { color: white; }
+			.jumbotron h2, .jumbotron h1 { margin: 0; }
+		</style>
 	</head>
-	<body>
+	<body ng-controller="proveitCtrl">
 		<div class="jumbotron">
 			<h1>Prove It!</h1>
-			<h2><small>Crypto-Currency balance verifier for sites that hold customer funds</h2>
+			<h2><small>Crypto-Currency balance verifier for sites that hold customer funds</small></h2>
 		</div>
+		<div class="container marketing">
+			<div class="row">
+				<div class="col-md-12">
+					<h2>Verify Your Site's Holdings Here</h2>
+					<p>
+						This page is for any customer of a site that uses Prove It! to verify they have sufficient funds on hand to cover all customer balances.
+					</p>
+					<p>
+						The site you use should provide you with three, key pieces of information:
+					</p>
+					<ul>
+						<li>The first of these is called the <em>Root Hash</em>. This is a public piece of information that is used, in part, to verify the amount of balances in customer accounts.</li>
+						<li>The second piece of information is a list that makes up a portion of the <a href="en.wikipedia.org/wiki/Merkle_tree">Merkle Tree</a> that can verify your balance is part of the stated balances.</li>
+						<li>The final part of this is the list of signed addresses, to prove the Crypto-Curency holdings are sufficient to cover the stated customer balances.</li>
+					</ul>
+					<p>
+						You can paste these three pieces of information below in the forms to the left, and the result will be more-or-less instantly displayed on the right.
+					</p>
+					<p>
+						Even if this site says everything appears to check out, you should still check the resulting data with the publicly available data your site publishes to ensure you're not being fooled.
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-7">
+					<h2>Input</h2>
+				</div>
+				<div class="col-md-5">
+					<h2>Result</h2>
+				</div>
+			</div>
+		</div>
+		<a href="https://github.com/ConceptPending/proveit"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://github-camo.global.ssl.fastly.net/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
 	</body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
 	<script src="https://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha256.js"></script>
+	<script src="js/decimal.js"></script>
+	<script src="js/ng-proveit.js"></script>
 	<script>
 		
 	</script>
