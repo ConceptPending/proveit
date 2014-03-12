@@ -1,25 +1,3 @@
-function Node(value, hashdigest) {
-	this.value = Decimal(value);
-	this.hashdigest = hashdigest;
-}
-
-var NodeCombiner = function(left, right) {
-	value = left.value.add(right.value);
-	hashdigest = CryptoJS.SHA256(value.toString() + left.hashdigest + right.hashdigest).toString();
-	return new Node(value, hashdigest);
-}
-
-var ValidateNode = function(node, roothash, pairlist) {
-	for (x in pairlist) {
-		if (pairlist[x][2]) {
-			node = NodeCombiner(node, Node(pairlist[x][0], pairlist[x][1]));
-		} else {
-			node = NodeCombiner(Node(pairlist[x][0], pairlist[x][1]), node);
-		}
-	}
-	return roothash == node.hashdigest;
-}
-
 var app = angular.module('proveit', []);
 
 app.controller("proveitCtrl", function($scope, $http) {
@@ -27,4 +5,17 @@ app.controller("proveitCtrl", function($scope, $http) {
 	$scope.totalbalance = 0;
 	$scope.rawholdings = '';
 	$scope.hashtreedump = '';
+	$scope.hashVerified = '';
+	$scope.UpdateHashVerifier = function() {
+		try {
+			jsondump = $.parseJSON($scope.hashtreedump);
+			$scope.nodeinfo = jsondump[0];
+			$scope.roothash = jsondump[1];
+			hashtree = jsondump[2];
+			node = new Node($scope.nodeinfo[0], $scope.nodeinfo[1])
+			$scope.hashVerified = ValidateNode(node, jsondump[1], hashtree);
+		} catch(err) {
+			$scope.hashVerified = 'Malformed';
+		}
+	}
 });

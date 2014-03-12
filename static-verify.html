@@ -14,6 +14,16 @@
 				background-image: linear-gradient(to bottom,#293EAC 0,#316ACE 100%);
 				color: white;
 			}
+			.iconic-circle-x {
+				fill: red;
+				stroke: red;
+				vertical-align: middle;
+			}
+			.iconic-circle-check {
+				fill: green;
+				stroke: green;
+				vertical-align: middle;
+			}
 			.jumbotron small { color: white; }
 			.jumbotron h2, .jumbotron h1 { margin: 0; }
 		</style>
@@ -54,12 +64,8 @@
 					<h2>Input</h2>
 					<form role="form">
 						<div class="form-group">
-							<label for="">Root Hash</label>
-							<input class="form-control" type="" name="" id="" ng-model="roothash">
-						</div>
-						<div class="form-group">
 							<label for="">Hash Tree Dump</label>
-							<textarea rows=5 class="form-control" type="" name="" id="" ng-model="hashtreedump"></textarea>
+							<textarea rows=5 class="form-control" type="" name="" id="" ng-change="UpdateHashVerifier()" ng-model="hashtreedump"></textarea>
 						</div>
 						<div class="form-group">
 							<label for="">Site Holdings Verification (Coming Soon)</label>
@@ -69,6 +75,122 @@
 				</div>
 				<div class="col-md-5">
 					<h2>Result</h2>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Part 1: Hash Verifier
+						</div>
+						<div class="panel-body" ng-show="hashVerified === ''">
+							Please paste a the response given by a site in the form to the left.
+						</div>
+						<div class="panel-body" ng-show="hashVerified === 'Malformed'">
+							<p>
+								The hash your site provided you seems malformed.
+							</p>
+							<p>
+								Please ensure you copy and pasted the exact output your site gave you.
+							</p>
+						</div>
+						<div class="panel-body" ng-show="hashVerified[0] === true">
+							<svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" width="32" height="32" xml:space="preserve" data-icon="circle-check" class="iconic iconic-circle-check iconic-size-md iconic-orientation-square" viewBox="0 0 32 32">
+							  <title>Circle Check</title>
+							  <defs>
+								<clipPath id="iconic-size-md-circle-check-clip-0">
+								  <path d="M0 0v32h32v-32h-32zm13.1 24.2l-6.2-6.2 2.1-2.1 3.9 3.9 10-10.9 2.2 2-12 13.3z" />
+								</clipPath>
+							  </defs>
+							  <circle cx="16" cy="16" r="16" clip-path="url(#iconic-size-md-circle-check-clip-0)" class="iconic-circle-check-body iconic-element-fill" />
+							</svg>
+							<span class="success">Verified!</span><br>
+								<p>
+									<strong>Root Hash</strong><br><span ng-bind="roothash"></span>
+								</p>
+								<p>
+									<strong>Your Balance</strong><br><span ng-bind="nodeinfo[0]"></span><br>
+								</p>
+								<p>
+									<strong>Your Hash</strong><br><span ng-bind="nodeinfo[1]"></span><br>
+								</p>
+							<h3>What does this mean?</h3>
+							<p>
+								This is good news!
+							</p>
+							<p>
+								However, it's not a guarantee you're safe.
+							<p>
+							<p>
+								This means the company you're trusting your funds to isn't likely lying about their outstanding liabilities.
+							</p>
+							<p>
+								Unfortunately, they could still be lying about how many Bitcoin they hold, which is where Part 2 comes into play.
+							</p>
+							<p>
+								This application will soon verify Bitcoin holdings as well. This is implemented in the backend, but this web app is not equipped to validate that yet.
+							</p>
+						</div>
+						<div class="panel-body" ng-show="hashVerified[0] === false">
+							<svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" width="32" height="32" xml:space="preserve" data-icon="circle-x" class="iconic iconic-circle-x iconic-size-md iconic-orientation-square" viewBox="0 0 32 32">
+							  <title>Circle X</title>
+							  <defs>
+								<clipPath id="iconic-size-md-circle-x-clip-0">
+								  <path d="M0 0v32h32v-32h-32zm23.1 21l-2.1 2.1-5-5-5 5-2.1-2.1 5-5-5-5 2.1-2.1 5 5 5-5 2.1 2.1-5 5 5 5z" />
+								</clipPath>
+							  </defs>
+							  <circle cx="16" cy="16" r="16" clip-path="url(#iconic-size-md-circle-x-clip-0)" class="iconic-circle-x-body iconic-element-fill" />
+							</svg>
+							<span class="failed">Not Verified!</span>
+							<h3>What does this mean?</h3>
+							<p>
+								This is not good news!
+							</p>
+							<p>
+								This means the company you are trusting your money with has not proven they are honestly disclosing the total balance of customer accounts.
+							</p>
+							<p>
+								If you are seeing this after pasting text a company gave you to verify their holdings, it's likely best to withdraw your funds, then give the company a short period of time to explain itself, and if the company does not fix the problem in short order, post about it publicly in either a relevant subreddit or BitcoinTalk.org.
+							</p>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Part 2: Holdings Verification
+						</div>
+						<div clas="panel-body">
+							<p>
+								
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" id="owner">
+				<div class="col-md-12">
+					<h2>Own a Site that Holds Customer Funds?</h2>
+					<p>
+						If you own a site and want to use Prove It! to prove you're holding onto customer funds safely, you can use the provided Python library to generate unique hashtrees for each of your customers.
+					</p>
+					<p>
+						More detailed instructions can be found at the project's <a href="https://github.com/ConceptPending/proveit">Github</a>, but in order for your customers to be able to come to a page like this and verify you're telling them the truth, you will need to provide them with the following output.
+					</p>
+					<pre>
+# nodelist is a pre-generated list of nodes with your customer's
+# account balance and unique hash as explained on Github.
+h = HashTree(nodelist)
+
+# i is the index your customer can be found at. A lookup method
+# is included in the HashTree class.
+nodeinfo = h.GetNodeInfo(i)
+pairlist = h.GetNodePairList(i)
+
+# This outputs the string you should have your customer copy &
+# paste into this (or a similar) webpage.
+json.dumps([info, pairlist[0], pairlist[1]])
+					</pre>
+					<p>
+						The customer will then be able to copy & paste that string into the text input above and receive immediate reassurance as to the status of your funds.
+					</p>
+					<p>
+						Please note we will soon be incorporating the CryptoCurrency 
+					</p>
 				</div>
 			</div>
 		</div>
@@ -79,6 +201,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
 	<script src="https://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha256.js"></script>
 	<script src="js/decimal.js"></script>
+	<script src="js/proveit.js"></script>
 	<script src="js/ng-proveit.js"></script>
 	<script>
 		

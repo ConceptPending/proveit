@@ -3,6 +3,7 @@ import math
 from decimal import Decimal
 from bitcoinrpc import *
 import time
+import simplejson as json
 
 class Node():
 	def __init__(self, value, hashdigest):
@@ -63,7 +64,7 @@ class HashTree():
 		return info[0], info[1], verifyinfo[0], verifyinfo[1]
 	
 	def GetNodeInfo(self, index):
-		return self.tree[0][index].value, self.tree[0][index].hashdigest
+		return str(self.tree[0][index].value), self.tree[0][index].hashdigest
 	
 	def GetNodePairList(self, index, pairlist=[], tree=None):
 		if tree == None:
@@ -71,7 +72,7 @@ class HashTree():
 			pairlist = []
 		elif len(tree) == 1:
 			return self.roothash, pairlist
-		pairlist.append((tree[0][index + (-1 if index % 2 else 1)].value, tree[0][index + (-1 if index % 2 else 1)].hashdigest, 0 if index % 2 else 1))
+		pairlist.append((str(tree[0][index + (-1 if index % 2 else 1)].value), tree[0][index + (-1 if index % 2 else 1)].hashdigest, 0 if index % 2 else 1))
 		index = index / 2
 		return self.GetNodePairList(index, pairlist=pairlist, tree=tree[1:])
 		

@@ -8,6 +8,6 @@ setup(
     description="Implementation of gmaxwell's suggestion of proving account balances",
     name='proveit',
     packages=[''],
-    install_requires=['bitcoin-python'],
-    version='0.0.5'
+    install_requires=['bitcoin-python', 'simplejson'],
+    version='0.0.6'
 )
