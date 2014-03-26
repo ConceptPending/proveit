@@ -6,17 +6,24 @@ import time
 import simplejson as json
 
 class Node():
-	def __init__(self, value, hashdigest):
-		value = Decimal(str(value))
-		self.value = value
-		self.hashdigest = hashdigest
-	
+	def __init__(self, nsum, **kwargs):
+		self.sum = Decimal(str(nsum))
+		if kwargs.keys() == ['nhash']:
+			self.hash = kwargs['nhash']
+		elif sorted(kwargs.keys()) == ['nonce', 'uid']:
+			self.hash = sha256("{k[uid]}|{sum:f}|{k[nonce]}".format(sum=self.sum.normalize(), k=kwargs)).hexdigest()
+		else:
+			raise ValueError('must pass either:  nhash=...	or:  uid=..., nonce=... --- but got ' + str(kwargs))
+
+	def __str__(self):
+		return str({'sum': str(self.sum), 'hash': self.hash})
+
 def NodeCombiner(left, right):
-	newvalue = left.value + right.value
-	lefthash, righthash = left.hashdigest, right.hashdigest
-	hashdigest = sha256(str(newvalue) + lefthash + righthash).hexdigest()
-	
-	return Node(newvalue, hashdigest)
+	newsum = left.sum + right.sum
+	newsum = newsum.normalize()
+	newhash = sha256("{:f}|{}|{}".format(newsum, left.hash, right.hash)).hexdigest()
+
+	return Node(newsum, nhash=newhash)
 
 class HashTree():
 	def __init__(self, nodelist):
@@ -28,14 +35,16 @@ class HashTree():
 		self.GenLookup()
 	
 	def ReturnTotal(self):
-		return self.tree[-1][0].value
+		return self.tree[-1][0].sum
 	
 	def GenTree(self, nodelist):
 		self.tree.append(nodelist)
 		newnodelist = []
-		
+
+		# FIXME: Add tree layout randomisation as the default and leave
+		#	 this as an option for compatibility testing.
 		if len(nodelist) % 2:
-			nodelist.append(Node(0.0, sha256('0').hexdigest()))
+			nodelist.append(Node(0, uid="dummy", nonce="0"))
 		
 		for x in range(int(math.ceil(len(nodelist)/2.0))):
 			newnodelist.append(NodeCombiner(nodelist[(x * 2)], nodelist[(x * 2 + 1)]))
@@ -44,7 +53,7 @@ class HashTree():
 			return self.GenTree(newnodelist)
 		else:
 			self.tree.append(newnodelist)
-			self.roothash = newnodelist[0].hashdigest
+			self.roothash = newnodelist[0].hash
 			return self.roothash
 	
 	def ValidateTree(self, tree=None):
@@ -64,7 +73,7 @@ class HashTree():
 		return info[0], info[1], verifyinfo[0], verifyinfo[1]
 	
 	def GetNodeInfo(self, index):
-		return str(self.tree[0][index].value), self.tree[0][index].hashdigest
+		return str(self.tree[0][index].sum), self.tree[0][index].hash
 	
 	def GetNodePairList(self, index, pairlist=[], tree=None):
 		if tree == None:
@@ -72,24 +81,24 @@ class HashTree():
 			pairlist = []
 		elif len(tree) == 1:
 			return self.roothash, pairlist
-		pairlist.append((str(tree[0][index + (-1 if index % 2 else 1)].value), tree[0][index + (-1 if index % 2 else 1)].hashdigest, 0 if index % 2 else 1))
+		pairlist.append((str(tree[0][index + (-1 if index % 2 else 1)].sum), tree[0][index + (-1 if index % 2 else 1)].hash, 0 if index % 2 else 1))
 		index = index / 2
 		return self.GetNodePairList(index, pairlist=pairlist, tree=tree[1:])
 		
 	def GenLookup(self):
 		index = 0
 		for x in self.nodelist:
-			self.lookup[x.hashdigest] = index
+			self.lookup[x.hash] = index
 			index += 1
-	
+
 def ValidateNode(node, roothash, pairlist):
 	for x in pairlist:
 		# If this was an even node, put the paired node on the right, otherwise it goes on the left.
 		if x[2]:
-			node = NodeCombiner(node, Node(x[0], x[1]))
+			node = NodeCombiner(node, Node(nsum=x[0], nhash=x[1]))
 		else:
-			node = NodeCombiner(Node(x[0], x[1]), node)
-	return node.hashdigest == roothash
+			node = NodeCombiner(Node(nsum=x[0], nhash=x[1]), node)
+	return node.hash == roothash
 
 class Coin():
 	def __init__(self, host, port, user, password, use_https=False):
