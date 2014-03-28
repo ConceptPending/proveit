@@ -72,6 +72,15 @@ In practice, you can likely get away with something approximating the following 
 ValidateBalance(coin, hashtree.GetTotal())
 ```
 
+#### JSON interface
+
+`followit.py` accepts an accounts list and produces either the root
+info or a partial tree for a given user, all in JSON format as per the
+[draft standard] [s11n].  See [its USAGE] [USAGE] for more
+information.
+
+ [USAGE]: followit.py#L5
+
 #### Browser Verification (Work in Progress!)
 Included is a JS implementation of the verification code, so that customers can copy & paste the Root Hash + Merkle Tree, then see whether the tree can be verified as well as whether they have proven they hold that amount of Crypto-Currency.
 
