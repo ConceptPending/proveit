@@ -39,7 +39,6 @@ if __name__=='__main__':
 	print "Tree root hash: " + str(h.roothash)
 
 	for x in range(len(nodelist)):
-		info = h.GetNodeInfo(x)
 		pairlist = h.GetNodePairList(x)
 		included = ValidateNode(nodelist[x], pairlist[0], pairlist[1])
 		print "Inclusion verified " + str(included) + " for node " + str(nodelist[x])
