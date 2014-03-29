@@ -1,7 +1,9 @@
 Prove It!
 =========
 
-This is a basic implementation of gmaxwell's suggestion of proving account balances documented here: https://iwilcox.me.uk/v/nofrac
+This is a basic implementation of gmaxwell's suggestion of proving
+account balances documented here:
+https://iwilcox.me.uk/2014/proving-bitcoin-reserves
 
 This will work for any CryptoCurrency that is based off the Bitcoin protocol.
 
@@ -12,15 +14,28 @@ To install the project just use:
 pip install proveit
 ```
 
-You will need to provide the HashTree class with a list of customer accounts and hashes with which to create a glorified Merkle tree.
+You will need to provide the HashTree class with a list of customer
+balances, user-chosen tokens such as username/e-mail and nonces with
+which to create a glorified Merkle tree.
 
-The hashes should probably just be hashfunction(customer_id + salt), or something of the like.
+You can supply a manually computed hash instead, in which case you
+should consider generating it in way that's [compatible with other
+implementations] [s11n] (the default hashing used if you supply
+uids/nonces is already compatible).
+
+ [s11n]: https://github.com/olalonde/proof-of-liabilities#serialized-data-formats-work-in-progress--draft
 
 #### Basic Usage
 ```python
 from proveit import *
 
-customers = [ Node(123, 'unique identifier, preferably hashed'), Node(456, 'unique identifier2, preferably hashed as well')]
+customers = [ Node(nsum=123, uid='unique user-chosen identifier', nonce='secret shared with exchange'),
+              Node(nsum=456, uid='another unique user-chosen id', nonce='another secret shared with exchange')]
+
+# Alternatively:
+
+customers = [ Node(nsum=123, nhash='externally computed hash, preferably produced compatibly'),
+              Node(nsum=456, nhash='another externally computed hash, preferably produced compatibly')]
 
 hashtree = HashTree(customers)
 ```
@@ -30,15 +45,15 @@ Now you've generated a hashtree where any customer can validate that you've incl
 All you need to do to provide them with the relevant information follows:
 
 ```python
-info = hashtree.GetInfoFromHash('unique identifier, preferably hashed')
+info = hashtree.GetInfoFromHash('hash')
 ```
 
-This provides (Account Value, Identifier, root hash, Hash Tree)
+This provides (account balance, account hash, root hash, partial hash tree)
 
 Now anyone can verify this section of the Merkle tree using the following function.
 
 ```python
-ValidateNode(Node(info[0], info[1]), info[2], info[3])
+ValidateNode(Node(nsum=123, uid='user-chosen id', nonce='secret shared with exchange'), info[2], info[3])
 ```
 
 To add the CryptoCurrency portion of the account verification, use the following code, inserting your own RPC information as required.
