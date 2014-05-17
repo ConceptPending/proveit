@@ -174,16 +174,16 @@
 					<pre>
 # nodelist is a pre-generated list of nodes with your customer's
 # account balance and unique hash as explained on Github.
-h = HashTree(nodelist)
+hashtree = HashTree(nodelist)
 
 # i is the index your customer can be found at. A lookup method
 # is included in the HashTree class.
-nodeinfo = h.GetNodeInfo(i)
-pairlist = h.GetNodePairList(i)
+nodeinfo = hashtree.GetNodeInfo(i)
+pairlist = hashtree.GetNodePairList(i)
 
 # This outputs the string you should have your customer copy &
 # paste into this (or a similar) webpage.
-json.dumps([info, pairlist[0], pairlist[1]])
+json.dumps([nodeinfo, pairlist[0], pairlist[1]])
 					</pre>
 					<p>
 						The customer will then be able to copy & paste that string into the text input above and receive immediate reassurance as to the status of your funds.

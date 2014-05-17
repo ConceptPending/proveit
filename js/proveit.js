@@ -5,7 +5,7 @@ function Node(value, hashdigest) {
 
 var NodeCombiner = function(left, right) {
 	value = left.value.add(right.value);
-	hashdigest = CryptoJS.SHA256(value.toString() + left.hashdigest + right.hashdigest).toString();
+	hashdigest = CryptoJS.SHA256(value.toString() + '|' + left.hashdigest + '|' + right.hashdigest).toString();
 	return new Node(value, hashdigest);
 }
 
